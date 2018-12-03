@@ -8,17 +8,18 @@ parse_source_config() {
 }
 
 create_oscrc() {
-cat > $HOME/.oscrc <<EOF
+  mkdir -p ${HOME}/.config/osc
+  tee ${HOME}/.config/osc/oscrc > /dev/null << OSCCONFIG
 [general]
-apiurl = $OSC_API
+apiurl = ${OSC_API}
 
-[$OSC_API]
-EOF
+[${OSC_API}]
+OSCCONFIG
 
-if [ ! -z "$OSC_USERNAME" ]; then
-cat >> $HOME/.oscrc <<EOF
-user = $OSC_USERNAME
+  if [ ! -z "$OSC_USERNAME" ]; then
+      cat >> ${HOME}/.config/osc/oscrc << OSCCONFIG
+user = ${OSC_USERNAME}
 pass = ${OSC_PASSWORD}
-EOF
-fi
+OSCCONFIG
+  fi
 }
